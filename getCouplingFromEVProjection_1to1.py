@@ -1,13 +1,19 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Thu May  2 09:04:27 2024
+Here we use data from 
 
-Here we use data from Leonie Borne (published in NeuroImage 2023), 
-the projection of gradient I eigenmap within the left hippocampus onto the 
-cortical surface (see Fig 6). The volumetric data was projected onto meshes before.
+Borne, L., Tian, Y., Lupton, M. K., Van Der Meer, J. N., Jeganathan, J., Paton, B., Koussis, N., Guo, C. C., 
+Robinson, G. A., Fripp, J., Zalesky, A., & Breakspear, M. (2023). Functional re-organization of 
+hippocampal-cortical gradients during naturalistic memory processes. NeuroImage, 271, 119996. 
+https://doi.org/10.1016/j.neuroimage.2023.119996
 
-@author: abehler
+to calculate a coupling of the hippocampus NMM network to the cortical hemisphere NMM network. We use  the 
+projection of gradient I eigenmap within the left hippocampus onto the cortical surface (see Fig 6). 
+
+The volumetric data was projected onto meshes before doing this.
+
+@author: Anna Behler
 """
 import matplotlib.pyplot as plt
 from nilearn import datasets, surface, plotting
@@ -26,43 +32,44 @@ def sort_indices_by_values(vector):
     return sorted(range(len(vector)), key=vector.__getitem__)
 
 
-# meshes
-hippoMeshFile = '/Volumes/NEWYSNG/Anna/MATLAB/Hippocampus/meshes/hippocampus.vtk'
+# load hippocampus mesh
+hippoMeshFile = '/path/to/mesh/hippocampus.vtk'
 mesh = pv.read(hippoMeshFile)
 verticesHippo = mesh.points
 hippoNumVertices = verticesHippo.shape[0]
 del mesh
 
+# get the cortical mesh
+fsaverage = datasets.fetch_surf_fsaverage()
+pial_mesh = fsaverage.pial_left
+verticesCortex, _ = surface.load_surf_data(pial_mesh)
+
 # load txt with labeling (0 or 1) for medial wall vertices
-file_path = '/Volumes/NEWYSNG/Anna/MATLAB/Hippocampus/meshes/fsaverage5_medial_wall_lh_masked.txt'
+file_path = '/path/to/file/fsaverage5_medial_wall_lh_masked.txt'
 medialWallMask = []
 with open(file_path, 'r') as file:
     for line in file:
         medialWallMask.append(int(line.strip()))
 medialWallMask = np.array(medialWallMask, dtype=bool)
 
-fsaverage = datasets.fetch_surf_fsaverage()
-pial_mesh = fsaverage.pial_left
-vertices, _ = surface.load_surf_data(pial_mesh)
-verticesCortex = vertices[medialWallMask,:]
-hemiNumVertices = verticesCortex.shape[0] # with medial wall included
+# remove medial wall in cortical mesh
+verticesCortex = verticesCortex[medialWallMask,:]
+hemiNumVertices = verticesCortex.shape[0] 
 
 print(f"Number of vertices on the hippocampal mesh: {hippoNumVertices}")
-print(f"Number of vertices on the inflated hemisphere mesh: {hemiNumVertices}")
+print(f"Number of vertices on the hemisphere mesh: {hemiNumVertices}")
 
 # hipocampal texture
 textureHippo = np.loadtxt(
-    "/Users/ab799/Documents/CouplingFromFunctionalProjections/EigenvectorHippocampus.csv",
+    "/path/to/file/EigenvectorHippocampus.csv",
                  delimiter=",")
 
 # cortex texture, note this is still with medial wall
 textureCortex = np.loadtxt(
-    "/Users/ab799/Documents/CouplingFromFunctionalProjections/projection2cortex_fs10k.csv",
+    "/path/to/file/projection2cortex_fs10k.csv",
                  delimiter=",")
 # get rid of the medial wall
 textureCortex = textureCortex[medialWallMask]
-
-
 
 # Plotting
 fig = plt.figure(figsize=(14, 7))
@@ -80,12 +87,9 @@ ax2.set_title('Hemisphere Mesh')
 plt.ion()
 plt.show()   
     
-
 # sort the texture data
 sortedIdxHippo = sort_indices_by_values(textureHippo)
 sortedIdxCortex = sort_indices_by_values(textureCortex)
-
-
 
 # Initialize the mapping arrays with None for no connection
 hippo2hemi = [np.nan] * hippoNumVertices
