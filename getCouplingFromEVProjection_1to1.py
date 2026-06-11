@@ -3,9 +3,9 @@
 """
 Created on Thu May  2 09:04:27 2024
 
-Here we use data from Leonie Borne (published in NeuroImage 2023), 
-the projection of gradient I eigenmap within the left hippocampus onto the 
-cortical surface (see Fig 6). The volumetric data was projected onto meshes before.
+Here we use data from Leonie Borne et al. (NeuroImage 2023), the projection of 
+gradient I eigenmap within the left hippocampus onto the cortical surface 
+(see Fig 6). The volumetric data was projected onto meshes before.
 
 @author: abehler
 """
