@@ -17,10 +17,7 @@ import pygeodesic.geodesic as geodesic
 import pyvista as pv
 import time
 import os
-# --- repo root (added during repo assembly: resolves data/ paths) ---
-_REPO = os.path.abspath(os.path.dirname(__file__))
-while not os.path.isdir(os.path.join(_REPO, 'data')) and os.path.dirname(_REPO) != _REPO:
-    _REPO = os.path.dirname(_REPO)
+_REPO = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))  # repo root (simulation/coupled/ -> repo)
 import nibabel as nib
 from scipy.io import savemat
 
