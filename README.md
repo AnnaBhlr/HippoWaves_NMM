@@ -95,9 +95,10 @@ copy (the paths in the scripts are currently machine-specific — see note below
 
 ## Example data
 
-A **minimal example is bundled in the repo** under `example_data/` — a ~1.5 s slice
-(150 time points) of one hippocampus run and one coupled run, just the
-`time_vector_*.csv` + `fieldact_*.csv` the analysis needs (~44 MB total).
+A **minimal example is bundled in the repo** under `example_data/` — a ~1 s slice
+(100 time points) of one hippocampus run and one coupled run, just the
+`time_vector_*.csv` + `fieldact_*.csv` the analysis needs (~30 MB total, every
+file < 25 MB).
 `analysis/analyze_single_simulation.m` points at these by default, so it runs
 straight after cloning (given the MATLAB toolboxes — see Dependencies).
 
