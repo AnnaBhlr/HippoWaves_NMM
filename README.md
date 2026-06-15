@@ -25,7 +25,9 @@ HippoCortexWaves/
 ├── external/                 # third-party vendored code (NOT ours) — see external/README.md
 ├── carlos_coronel_original/  # original Jansen-Rit model by C. Coronel (source of our models)
 ├── resampling_principal_gradient/  # builds the cortical principal gradient input
-└── data/                     # static inputs (meshes, coupling matrices, colormaps)
+├── example_data/             # bundled minimal example run (analysis runs after clone)
+├── data/                     # static inputs (meshes, coupling matrices, colormaps)
+└── LICENSE                   # MIT
 ```
 
 ## Dependencies (must be installed separately)
@@ -93,16 +95,17 @@ copy (the paths in the scripts are currently machine-specific — see note below
 
 ## Example data
 
-Two example runs (one hippocampus-only, one coupled) live under `out/`:
-`out/example_hippocampus/20240513_174237/` and `out/example_coupled/20260204_213749/`.
-`analysis/analyze_single_simulation.m` points at them by default.
+A **minimal example is bundled in the repo** under `example_data/` — a ~1.5 s slice
+(150 time points) of one hippocampus run and one coupled run, just the
+`time_vector_*.csv` + `fieldact_*.csv` the analysis needs (~44 MB total).
+`analysis/analyze_single_simulation.m` points at these by default, so it runs
+straight after cloning (given the MATLAB toolboxes — see Dependencies).
 
-**These files are NOT in the git repo** — they total ~1.7 GB and individual files
-exceed GitHub's 100 MB per-file limit (the coupled `simulation_*.mat` alone is
-~1.2 GB), so `out/` is git-ignored. Host the example data externally (e.g. Zenodo /
-OSF / figshare) and add the download link here so readers can place it under `out/`.
-A lighter alternative is to ship only the small CSVs needed by the analysis
-(`time_vector_*.csv`, `fieldact_*.csv`) for one short run.
+The **full example runs** (~1.7 GB; the coupled `simulation_*.mat` alone is ~1.2 GB)
+exceed GitHub's 100 MB per-file limit and are **not** in the repo (`out/` is
+git-ignored). Host them externally (e.g. Zenodo / OSF / figshare) and add the
+download link here; point `simHippoDir` / `simCoupledDir` at them to analyse
+complete runs.
 
 ## Attribution
 

@@ -37,10 +37,11 @@ addpath(fullfile(repoRoot, 'data', 'meshes'));            % hippocampus.m mesh s
 % addpath(genpath('/path/to/cnem'));
 
 % --- the two single runs to analyse ---
-% Defaults point at the bundled example data (out/...); change to your own
-% output/<timestamp> folders to analyse new runs.
-simHippoDir   = fullfile(repoRoot, 'out', 'example_hippocampus', '20240513_174237');
-simCoupledDir = fullfile(repoRoot, 'out', 'example_coupled',     '20260204_213749');
+% Defaults point at the bundled minimal example (example_data/, ~1.5 s of one
+% hippocampus and one coupled run). Swap in your own output/<timestamp> folders
+% (or the full example data hosted externally) to analyse complete runs.
+simHippoDir   = fullfile(repoRoot, 'example_data', 'hippocampus', '20240513_174237');
+simCoupledDir = fullfile(repoRoot, 'example_data', 'coupled',     '20260204_213749');
 
 relaxTime  = 0.05;   % s, discarded transient
 smoothWin  = 30;     % gaussian smoothing window for R / speed (as in the figures)

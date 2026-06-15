@@ -17,3 +17,7 @@ fieldact_*.csv
 time_vector_*.csv
 simulation_parameters*.csv
 FlowPotential_*.csv
+
+# ...but DO keep the bundled minimal example (overrides the *_*.csv rules above)
+!example_data/
+!example_data/**
