@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Flow-potential analysis for a SINGLE simulation output.
+Flow-potential analysis for output of a single simulation.
 
 Reads one timestamped simulation-output folder (as written by
 simulation/coupled/run_coupled_system.py), computes the phase-gradient flow
@@ -18,26 +18,25 @@ import numpy as np
 import pandas as pd
 from scipy.signal import hilbert
 import matplotlib.pyplot as plt
-# wave_detection_methods is external/vendored code (originally from the
+# wave_detection_methods is external code (originally from the
 # traveling-waves codebase). It lives in ../external/ (repo-level external
 # folder) -- add it to the path so the import works regardless of cwd.
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "external"))
 from wave_detection_methods import *
 
-# === The SINGLE simulation-output folder to analyse ===
+# The SINGLE simulation-output folder to analyse
 # One timestamped run produced by simulation/coupled/run_coupled_system.py,
 # e.g. output/20260204_162512. Set this to the run you want to process.
 sim_dir = os.path.join(_REPO, "output", "REPLACE_WITH_RUN_TIMESTAMP")
 timestamp = os.path.basename(os.path.normpath(sim_dir))
 output_dir = sim_dir
 
-# === Handle hippocampus mesh
+# Handle hippocampus mesh
 system1Input = os.path.join(_REPO, "data", "meshes", "hippocampus.vtk")
 mesh = pv.read(system1Input)
-verticesHippo = mesh.points
-facesHippo = mesh.faces
-facesHippo = facesHippo.reshape((-1, 4))[:, 1:]
-hippoNodes = 3718
+verticesHippo = mesh.points.astype(np.float64)
+facesHippo = mesh.faces.reshape((-1, 4))[:, 1:].astype(np.int64)
+hippoNodes = verticesHippo.shape[0]
 
 cortexinfl_path = os.path.join(_REPO, "data", "meshes", "fsaverage5_hemi_L_pial_noMedialWall.vtk")
 cortexinfl = pv.read(cortexinfl_path)
@@ -119,9 +118,6 @@ U_lh_df.to_csv(os.path.join(output_dir, "FlowPotential_cortex.csv"), index=False
 
 # now the hippocampus
 boundary_mask_lh = k_ring_boundary(v_lh, facesHippo, k=boundary_k_ring)
-
-verticesHippo = verticesHippo.astype(np.float64)
-facesHippo = facesHippo.astype(np.int64)
 
 # Pre-compute gradient operator and barycenters
 gradient_operator_hippo = igl.grad(verticesHippo, facesHippo)
