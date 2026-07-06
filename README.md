@@ -1,5 +1,4 @@
-# HippoWaves_NMM
-
+# HippoCortexWaves
 
 Code to reproduce the simulations and analyses of the cortex–hippocampus
 traveling-waves manuscript.
@@ -124,7 +123,7 @@ complete runs.
   (The companion mesh `Q1-Q6_R440.L.midthickness.32k_fs_LR.surf.gii` in that
   folder is from the same repo's `gradient_data/templates/`.)
 
-## Before publishing / running — required fixes
+## ⚠️ Before publishing / running — required fixes
 
 The **simulations** and the **`FlowPotential` analysis** are clone-and-run: all
 input data are included under `data/` and `resampling_principal_gradient/`, and

@@ -1,0 +1,23 @@
+# OS / editor cruft
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Simulation / analysis output (regenerated, not version-controlled)
+output/
+Output/
+# Example data — too large for GitHub (>100 MB files); host externally, see README
+out/
+simulation_*.mat
+slowTheta_*.mat
+fieldact_*.csv
+time_vector_*.csv
+simulation_parameters*.csv
+FlowPotential_*.csv
+
+# ...but DO keep the bundled minimal example (overrides the *_*.csv rules above)
+!example_data/
+!example_data/**
