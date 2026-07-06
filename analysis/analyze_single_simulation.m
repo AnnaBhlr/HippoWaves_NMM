@@ -37,7 +37,7 @@ addpath(fullfile(repoRoot, 'data', 'meshes'));            % hippocampus.m mesh s
 % addpath(genpath('/path/to/cnem'));
 
 % --- the two single runs to analyse ---
-% Defaults point at the bundled minimal example (example_data/, ~1.5 s of one
+% Defaults point at the bundled minimal example (example_data/, ~1 s of one
 % hippocampus and one coupled run). Swap in your own output/<timestamp> folders
 % (or the full example data hosted externally) to analyse complete runs.
 simHippoDir   = fullfile(repoRoot, 'example_data', 'hippocampus', '20240513_174237');
