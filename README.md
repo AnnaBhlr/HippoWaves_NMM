@@ -8,26 +8,32 @@ traveling-waves manuscript.
 ```
 HippoCortexWaves/
 ├── simulation/
-│   ├── coupled/              # coupled cortex <-> hippocampus model + runner
-│   │   ├── JansenRitModel_8equations_Mt.py    # neural-mass model (time-switchable coupling)
-│   │   └── run_coupled_system.py              # single simulation runner (builds EDR coupling inline)
-│   └── hippocampus_only/     # hippocampus-only model + runner
-│       ├── JansenRitModel_8equations.py       # neural-mass model (single static coupling)
-│       ├── coupling.py                        # builds the hippocampal EDR coupling matrix
-│       └── JR_HippoFreesurfer_edr_pChange.py  # single simulation runner
+│   ├── coupled/                         # coupled cortex–hippocampus model and runner
+│   │   ├── JansenRitModel_8equations_Mt.py    # neural-mass model with time-switchable coupling
+│   │   └── run_coupled_system.py             # simulation runner; builds within-surface EDR coupling
+│   └── hippocampus_only/                # hippocampus-only model and runner
+│       ├── JansenRitModel_8equations.py      # neural-mass model with static coupling
+│       ├── coupling.py                      # builds hippocampal EDR coupling
+│       └── JR_HippoFreesurfer_edr_pChange.py # simulation runner
+├── Coupling_FunctionalProjections/      # constructs hippocampal–cortical coupling
+│   ├── getCouplingFromEVProjection_1to1.py   # matches vertices by proportional gradient rank
+│   ├── EigenvectorHippocampus.csv            # first hippocampal gradient eigenmap
+│   └── projection2cortex_fs10k.csv           # cortical projection, including medial-wall vertices
 ├── analysis/
-│   ├── FlowPotential_CortexAndHippo.py   # flow potentials / phase gradients (one sim run)
-│   ├── analyze_single_simulation.m       # one hippo + one coupled run -> R, speed, angle (single figure)
-│   ├── compute_coherence.m               # Kuramoto order parameter R (extracted from figures)
-│   ├── compute_velocity_field.m          # traveling-wave velocity field (extracted from figures)
-│   └── compute_velocity_angle.m          # mean velocity angle to A-P (Y) axis (extracted from meanVelocityAngle.m)
-├── figures/                  # manuscript figure scripts (MATLAB + Python)
-├── external/                 # third-party vendored code (NOT ours) — see external/README.md
-├── carlos_coronel_original/  # original Jansen-Rit model by C. Coronel (source of our models)
-├── resampling_principal_gradient/  # builds the cortical principal gradient input
-├── example_data/             # bundled minimal example run (analysis runs after clone)
-├── data/                     # static inputs (meshes, coupling matrices, colormaps)
-└── LICENSE                   # MIT
+│   ├── FlowPotential_CortexAndHippo.py   # flow potentials and phase gradients
+│   ├── analyze_single_simulation.m       # compares hippocampal and coupled runs
+│   ├── compute_coherence.m               # Kuramoto order parameter R
+│   ├── compute_velocity_field.m          # travelling-wave velocity field
+│   └── compute_velocity_angle.m          # mean velocity angle to the A–P (Y) axis
+├── external/                            # third-party code; see external/README.md
+├── resampling_principal_gradient/       # prepares the cortical principal-gradient input p
+├── example_data/                        # minimal example data for analysis
+├── data/                                # static simulation inputs
+│   ├── meshes/                          # surface meshes and medial-wall mask
+│   ├── coupling/
+│   │   └── hemi2hippo.csv                # corrected cortex-indexed hippocampal vertex mapping
+│   └── colormaps/                       # colour maps
+└── LICENSE                              # MIT
 ```
 
 ## Dependencies (must be installed separately)
